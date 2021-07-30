@@ -16,8 +16,8 @@ export class Interaction {
         this.bot_id = bot_id;
         this.endpoints = {
             CALLBACK: `https://discord.com/api/v9/interactions/${data.id}/${data.token}/callback`,
-            MESSAGES: `https://discord.com/api/v9/webhooks/${this.bot_id}/${data.token}/messages/@original`,
-            FOLLOWUP: `https://discord.com/api/v9/webhooks/${this.bot_id}/${data.token}`
+            MESSAGES: `https://discord.com/api/v9/webhooks/${data.application_id}/${data.token}/messages/@original`,
+            FOLLOWUP: `https://discord.com/api/v9/webhooks/${data.application_id}/${data.token}`
         };
         if(data.type === 2) {
             // @ts-ignore
@@ -147,6 +147,7 @@ interface rawInteraction {
     token: string,
     version: number,
     type: number,
+    application_id: string,
     member: {
         user: Object
     },
@@ -163,6 +164,7 @@ interface rawButtonInteraction {
     token: string,
     version: number,
     type: number,
+    application_id: string,
     member: {
         user: Object
     },
