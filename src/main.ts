@@ -38,7 +38,7 @@ export class Interaction {
                         'Authorization': `Bot ${this.bot_token}`
                     }
                 }).then(async (res: Response) => {
-                    resolve(verifyRes(res, 200));
+                    resolve(await verifyRes(res, 200));
                 })
             })
         }
