@@ -66,7 +66,7 @@ export class Interaction {
                         'Content-Type':"application/json",
                     }
                 }).then(async (res: Response) => {
-                    resolve(verifyRes(res, 200));
+                    resolve(verifyRes(res, 204));
                 })
             })
         }

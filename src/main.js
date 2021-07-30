@@ -107,17 +107,41 @@ var Interaction = /** @class */ (function () {
                     }
                 }).then(function (res) { return __awaiter(_this, void 0, void 0, function () {
                     return __generator(this, function (_a) {
-                        resolve(verifyRes(res, 200));
+                        resolve(verifyRes(res, 204));
                         return [2 /*return*/];
                     });
                 }); });
             });
         };
         this.defer = function () {
-            _this.callback({ type: 6 });
+            return new Promise(function (resolve) { return __awaiter(_this, void 0, void 0, function () {
+                var _a;
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            _a = resolve;
+                            return [4 /*yield*/, this.callback({ type: 6 })];
+                        case 1:
+                            _a.apply(void 0, [_b.sent()]);
+                            return [2 /*return*/];
+                    }
+                });
+            }); });
         };
         this.thinking = function () {
-            _this.callback({ type: 5 });
+            return new Promise(function (resolve) { return __awaiter(_this, void 0, void 0, function () {
+                var _a;
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            _a = resolve;
+                            return [4 /*yield*/, this.callback({ type: 5 })];
+                        case 1:
+                            _a.apply(void 0, [_b.sent()]);
+                            return [2 /*return*/];
+                    }
+                });
+            }); });
         };
         return this;
     }
