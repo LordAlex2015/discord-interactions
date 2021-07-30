@@ -48,7 +48,14 @@ var Interaction = /** @class */ (function () {
             MESSAGES: "https://discord.com/api/v9/webhooks/" + this.bot_id + "/" + data.token + "/messages/@original",
             FOLLOWUP: "https://discord.com/api/v9/webhooks/" + this.bot_id + "/" + data.token
         };
-        this.packet = new SlashMessageInteraction(data);
+        if (data.type === 2) {
+            // @ts-ignore
+            this.packet = new SlashMessageInteraction(data);
+        }
+        else if (data.type === 3) {
+            // @ts-ignore
+            this.packet = new ButtonMessageInteraction(data);
+        }
         this.followup = function (content, thread_id) {
             if (thread_id === void 0) { thread_id = null; }
             return new Promise(function (resolve, reject) {
@@ -172,6 +179,33 @@ var SlashMessageInteraction = /** @class */ (function () {
         };
     }
     return SlashMessageInteraction;
+}());
+var ButtonMessageInteraction = /** @class */ (function () {
+    function ButtonMessageInteraction(data) {
+        return {
+            version: data.version,
+            type: data.type,
+            member: data.member,
+            user: data.member.user,
+            interaction: {
+                id: data.id,
+                token: data.token,
+                guild_id: data.guild_id,
+                channel_id: data.channel_id
+            },
+            message: data.message,
+            command: {
+                id: data.data.custom_id,
+                type: data.data.component_type,
+                values: data.data.values || [],
+                guild_id: data.guild_id,
+                channel_id: data.channel_id,
+                _raw: data.data
+            },
+            timestamp: Date.now()
+        };
+    }
+    return ButtonMessageInteraction;
 }());
 var verifyRes = function (res, expected_code) {
     if (res.status === expected_code) {

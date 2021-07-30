@@ -4,21 +4,28 @@ import fetch from "node-fetch";
 export class Interaction {
     readonly bot_id: string;
     readonly endpoints: { MESSAGES: string; CALLBACK: string; FOLLOWUP: string };
-    packet: SlashMessageInteraction;
+    // @ts-ignore
+    packet: SlashMessageInteraction | ButtonMessageInteraction;
     followup: (content: Object, thread_id: string | null) => Promise<Object>;
     edit_followup: (content: Object, message_id: string) => Promise<Object>;
     delete_followup: (message_id: string) => Promise<Object>;
     callback: (content: Object) => Promise<Object>;
     defer: () => Promise<Object>;
     thinking: () => Promise<Object>;
-    constructor(data: rawInteraction, bot_id: string) {
+    constructor(data: rawInteraction | rawButtonInteraction, bot_id: string) {
         this.bot_id = bot_id;
         this.endpoints = {
             CALLBACK: `https://discord.com/api/v9/interactions/${data.id}/${data.token}/callback`,
             MESSAGES: `https://discord.com/api/v9/webhooks/${this.bot_id}/${data.token}/messages/@original`,
             FOLLOWUP: `https://discord.com/api/v9/webhooks/${this.bot_id}/${data.token}`
         };
-        this.packet = new SlashMessageInteraction(data)
+        if(data.type === 2) {
+            // @ts-ignore
+            this.packet = new SlashMessageInteraction(data)
+        } else if(data.type === 3) {
+            // @ts-ignore
+            this.packet = new ButtonMessageInteraction(data)
+        }
         this.followup = (content: Object, thread_id = null) => {
             return new Promise((resolve, reject) => {
                 fetch(this.endpoints.FOLLOWUP + '?wait=true' + `${thread_id ? `&thread_id=${thread_id}`: ''}`, {
@@ -86,22 +93,7 @@ export class Interaction {
 }
 
 class SlashMessageInteraction {
-    constructor(data: {
-        id: string,
-        token: string,
-        version: number,
-        type: number,
-        member: {
-            user: Object
-        },
-        guild_id: string,
-        channel_id: string,
-        data: {
-            id: string,
-            options: any[],
-            name: string
-        }
-    }) {
+    constructor(data: rawInteraction) {
         return {
             version: data.version,
             type: data.type,
@@ -124,6 +116,32 @@ class SlashMessageInteraction {
         }
     }
 }
+class ButtonMessageInteraction {
+    constructor(data:rawButtonInteraction) {
+        return {
+            version: data.version,
+            type: data.type,
+            member: data.member,
+            user: data.member.user,
+            interaction: {
+                id: data.id,
+                token: data.token,
+                guild_id: data.guild_id,
+                channel_id: data.channel_id,
+            },
+            message: data.message,
+            command: {
+                id: data.data.custom_id,
+                type: data.data.component_type,
+                values: data.data.values || [],
+                guild_id: data.guild_id,
+                channel_id: data.channel_id,
+                _raw: data.data
+            },
+            timestamp: Date.now()
+        }
+    }
+}
 interface rawInteraction {
     id: string,
     token: string,
@@ -137,7 +155,24 @@ interface rawInteraction {
     data: {
         id: string,
         options: any[],
-        name: string
+        name: string,
+    }
+}
+interface rawButtonInteraction {
+    id: string,
+    token: string,
+    version: number,
+    type: number,
+    member: {
+        user: Object
+    },
+    message: Object,
+    guild_id: string,
+    channel_id: string,
+    data: {
+        custom_id: string,
+        component_type: number,
+        values?: string[]
     }
 }
 
