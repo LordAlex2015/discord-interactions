@@ -9,8 +9,8 @@ export class Interaction {
     edit_followup: (content: Object, message_id: string) => Promise<Object>;
     delete_followup: (message_id: string) => Promise<Object>;
     callback: (content: Object) => Promise<Object>;
-    defer: () => void;
-    thinking: () => void;
+    defer: () => Promise<Object>;
+    thinking: () => Promise<Object>;
     constructor(data: rawInteraction, bot_id: string) {
         this.bot_id = bot_id;
         this.endpoints = {
@@ -71,10 +71,15 @@ export class Interaction {
             })
         }
         this.defer = () => {
-            this.callback({type: 6});
+            return new Promise(async resolve => {
+                resolve(await this.callback({type: 6}));
+            })
+
         }
         this.thinking = () => {
-            this.callback({type: 5});
+            return new Promise(async resolve => {
+                resolve(await this.callback({type: 5}));
+            })
         }
         return this
     }
@@ -137,10 +142,19 @@ interface rawInteraction {
 
 const verifyRes = (res: Response, expected_code: number) => {
         if(res.status === expected_code) {
-            return res.json() || {}
+            try {
+                return res?.json() || {}
+            } catch(e) {
+                return {}
+            }
         } else {
             console.error("Warning Unexpected Status Code!")
-            return {status: res.status, body: res.json() || {}}
+            console.error(res.status)
+            try {
+                return {status: res.status, body: res?.json() || {}}
+            } catch(e) {
+                return {status: res.status, body:{}}
+            }
         }
 }
 

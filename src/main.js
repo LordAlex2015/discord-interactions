@@ -150,11 +150,22 @@ var SlashMessageInteraction = /** @class */ (function () {
 }());
 var verifyRes = function (res, expected_code) {
     if (res.status === expected_code) {
-        return res.json() || {};
+        try {
+            return (res === null || res === void 0 ? void 0 : res.json()) || {};
+        }
+        catch (e) {
+            return {};
+        }
     }
     else {
         console.error("Warning Unexpected Status Code!");
-        return { status: res.status, body: res.json() || {} };
+        console.error(res.status);
+        try {
+            return { status: res.status, body: (res === null || res === void 0 ? void 0 : res.json()) || {} };
+        }
+        catch (e) {
+            return { status: res.status, body: {} };
+        }
     }
 };
 exports.ApplicationCommandOptionType = {
