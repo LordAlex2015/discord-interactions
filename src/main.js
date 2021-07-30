@@ -59,7 +59,7 @@ var Interaction = /** @class */ (function () {
         this.followup = function (content, thread_id) {
             if (thread_id === void 0) { thread_id = null; }
             return new Promise(function (resolve, reject) {
-                node_fetch_1["default"](_this.endpoints.FOLLOWUP + '?wait=true' + ("" + (thread_id ? "&thread_id=" + thread_id : '')), {
+                node_fetch_1["default"](_this.endpoints.FOLLOWUP + ("" + (thread_id ? "&thread_id=" + thread_id : '')), {
                     method: "POST",
                     body: JSON.stringify(content),
                     headers: {

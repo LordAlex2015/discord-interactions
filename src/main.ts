@@ -28,7 +28,7 @@ export class Interaction {
         }
         this.followup = (content: Object, thread_id = null) => {
             return new Promise((resolve, reject) => {
-                fetch(this.endpoints.FOLLOWUP + '?wait=true' + `${thread_id ? `&thread_id=${thread_id}`: ''}`, {
+                fetch(this.endpoints.FOLLOWUP  + `${thread_id ? `&thread_id=${thread_id}`: ''}`, {
                     method: "POST",
                     body: JSON.stringify(content),
                     headers: {
