@@ -2,9 +2,9 @@
 import fetch from "node-fetch";
 
 export class SlashInteraction {
-    private readonly authToken: string;
-    private readonly bot_id: string;
-    private readonly endpoints: { MESSAGES: string; CALLBACK: string; FOLLOWUP: string };
+    readonly authToken: string;
+    readonly bot_id: string;
+    readonly endpoints: { MESSAGES: string; CALLBACK: string; FOLLOWUP: string };
     packet: SlashMessageInteraction;
     followup: (content: Object, thread_id: string | null) => Promise<Object>;
     edit_followup: (content: Object, message_id: string) => Promise<Object>;
