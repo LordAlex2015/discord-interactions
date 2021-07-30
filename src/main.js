@@ -107,7 +107,7 @@ var Interaction = /** @class */ (function () {
                     }
                 }).then(function (res) { return __awaiter(_this, void 0, void 0, function () {
                     return __generator(this, function (_a) {
-                        resolve(res.json() || null);
+                        resolve(res || null);
                         return [2 /*return*/];
                     });
                 }); })["catch"](function () { });
