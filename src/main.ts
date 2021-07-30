@@ -133,10 +133,10 @@ interface rawInteraction {
 
 const verifyRes = (res: Response, expected_code: number) => {
         if(res.status === expected_code) {
-            return res.json()
+            return res.json() || {}
         } else {
             console.error("Warning Unexpected Status Code!")
-            return {status: res.status, body: res.json()}
+            return {status: res.status, body: res.json() || {}}
         }
 }
 
