@@ -1,7 +1,7 @@
 // @ts-ignore
 import fetch from "node-fetch";
 
-export class SlashInteraction {
+export class Interaction {
     readonly bot_id: string;
     readonly endpoints: { MESSAGES: string; CALLBACK: string; FOLLOWUP: string };
     packet: SlashMessageInteraction;
@@ -10,6 +10,7 @@ export class SlashInteraction {
     delete_followup: (message_id: string) => Promise<Object>;
     callback: (content: Object) => Promise<Object>;
     defer: () => void;
+    thinking: () => void;
     constructor(data: rawInteraction, bot_id: string) {
         this.bot_id = bot_id;
         this.endpoints = {
@@ -71,6 +72,9 @@ export class SlashInteraction {
         }
         this.defer = () => {
             this.callback({type: 6});
+        }
+        this.thinking = () => {
+            this.callback({type: 5});
         }
         return this
     }

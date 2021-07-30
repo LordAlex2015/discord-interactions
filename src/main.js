@@ -36,11 +36,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.ButtonType = exports.ApplicationCommandOptionType = exports.SlashInteraction = void 0;
+exports.ButtonType = exports.ApplicationCommandOptionType = exports.Interaction = void 0;
 // @ts-ignore
 var node_fetch_1 = require("node-fetch");
-var SlashInteraction = /** @class */ (function () {
-    function SlashInteraction(data, bot_id) {
+var Interaction = /** @class */ (function () {
+    function Interaction(data, bot_id) {
         var _this = this;
         this.bot_id = bot_id;
         this.endpoints = {
@@ -116,11 +116,14 @@ var SlashInteraction = /** @class */ (function () {
         this.defer = function () {
             _this.callback({ type: 6 });
         };
+        this.thinking = function () {
+            _this.callback({ type: 5 });
+        };
         return this;
     }
-    return SlashInteraction;
+    return Interaction;
 }());
-exports.SlashInteraction = SlashInteraction;
+exports.Interaction = Interaction;
 var SlashMessageInteraction = /** @class */ (function () {
     function SlashMessageInteraction(data) {
         return {
