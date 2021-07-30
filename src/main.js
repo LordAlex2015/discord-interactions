@@ -207,26 +207,38 @@ var ButtonMessageInteraction = /** @class */ (function () {
     }
     return ButtonMessageInteraction;
 }());
-var verifyRes = function (res, expected_code) {
-    if (res.status === expected_code) {
-        try {
-            return (res === null || res === void 0 ? void 0 : res.json()) || {};
+var verifyRes = function (res, expected_code) { return __awaiter(void 0, void 0, void 0, function () {
+    var e_1, e_2;
+    var _a;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                if (!(res.status === expected_code)) return [3 /*break*/, 5];
+                _b.label = 1;
+            case 1:
+                _b.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, (res === null || res === void 0 ? void 0 : res.json())];
+            case 2: return [2 /*return*/, (_b.sent()) || {}];
+            case 3:
+                e_1 = _b.sent();
+                return [2 /*return*/, {}];
+            case 4: return [3 /*break*/, 9];
+            case 5:
+                console.error("Warning Unexpected Status Code!");
+                console.error(res.status);
+                _b.label = 6;
+            case 6:
+                _b.trys.push([6, 8, , 9]);
+                _a = { status: res.status };
+                return [4 /*yield*/, (res === null || res === void 0 ? void 0 : res.json())];
+            case 7: return [2 /*return*/, (_a.body = (_b.sent()) || {}, _a)];
+            case 8:
+                e_2 = _b.sent();
+                return [2 /*return*/, { status: res.status, body: {} }];
+            case 9: return [2 /*return*/];
         }
-        catch (e) {
-            return {};
-        }
-    }
-    else {
-        console.error("Warning Unexpected Status Code!");
-        console.error(res.status);
-        try {
-            return { status: res.status, body: (res === null || res === void 0 ? void 0 : res.json()) || {} };
-        }
-        catch (e) {
-            return { status: res.status, body: {} };
-        }
-    }
-};
+    });
+}); };
 exports.ApplicationCommandOptionType = {
     SUB_COMMAND: 1,
     SUB_COMMAND_GROUP: 2,

@@ -178,10 +178,10 @@ interface rawButtonInteraction {
     }
 }
 
-const verifyRes = (res: Response, expected_code: number) => {
+const verifyRes = async(res: Response, expected_code: number) => {
         if(res.status === expected_code) {
             try {
-                return res?.json() || {}
+                return await res?.json() || {}
             } catch(e) {
                 return {}
             }
@@ -189,7 +189,7 @@ const verifyRes = (res: Response, expected_code: number) => {
             console.error("Warning Unexpected Status Code!")
             console.error(res.status)
             try {
-                return {status: res.status, body: res?.json() || {}}
+                return {status: res.status, body: await res?.json() || {}}
             } catch(e) {
                 return {status: res.status, body:{}}
             }
