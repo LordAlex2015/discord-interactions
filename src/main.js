@@ -46,8 +46,8 @@ var Interaction = /** @class */ (function () {
         this.bot_id = bot_id;
         this.endpoints = {
             CALLBACK: "https://discord.com/api/v9/interactions/" + data.id + "/" + data.token + "/callback",
-            MESSAGES: "https://discord.com/api/v9/webhooks/" + data.application_id + "/" + data.token + "/messages/@original",
-            FOLLOWUP: "https://discord.com/api/v9/webhooks/" + data.application_id + "/" + data.token
+            MESSAGES: "https://discord.com/api/v9/webhooks/" + this.bot_id + "/" + data.token + "/messages/@original",
+            FOLLOWUP: "https://discord.com/api/v9/webhooks/" + this.bot_id + "/" + data.token
         };
         if (data.type === 2) {
             // @ts-ignore
