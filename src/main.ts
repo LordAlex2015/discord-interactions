@@ -12,7 +12,9 @@ export class Interaction {
     callback: (content: Object) => Promise<Object>;
     defer: () => Promise<Object>;
     thinking: () => Promise<Object>;
-    constructor(data: rawInteraction | rawButtonInteraction, bot_id: string) {
+    private readonly bot_token: string;
+    constructor(data: rawInteraction | rawButtonInteraction, bot_id: string, token:string) {
+        this.bot_token = token
         this.bot_id = bot_id;
         this.endpoints = {
             CALLBACK: `https://discord.com/api/v9/interactions/${data.id}/${data.token}/callback`,
@@ -33,6 +35,7 @@ export class Interaction {
                     body: JSON.stringify(content),
                     headers: {
                         'Content-Type':"application/json",
+                        'Authorization': `Bot ${this.bot_token}`
                     }
                 }).then(async (res: Response) => {
                     resolve(verifyRes(res, 200));
@@ -46,6 +49,7 @@ export class Interaction {
                     body: JSON.stringify(content),
                     headers: {
                         'Content-Type':"application/json",
+                        'Authorization': `Bot ${this.bot_token}`
                     }
                 }).then(async (res: Response) => {
                     resolve(verifyRes(res, 200));
@@ -58,6 +62,7 @@ export class Interaction {
                     method: "DELETE",
                     headers: {
                         'Content-Type':"application/json",
+                        'Authorization': `Bot ${this.bot_token}`
                     }
                 }).then(async (res: Response) => {
                     resolve(verifyRes(res, 204));

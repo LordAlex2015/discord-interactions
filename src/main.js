@@ -40,8 +40,9 @@ exports.ButtonType = exports.ApplicationCommandOptionType = exports.Interaction 
 // @ts-ignore
 var node_fetch_1 = require("node-fetch");
 var Interaction = /** @class */ (function () {
-    function Interaction(data, bot_id) {
+    function Interaction(data, bot_id, token) {
         var _this = this;
+        this.bot_token = token;
         this.bot_id = bot_id;
         this.endpoints = {
             CALLBACK: "https://discord.com/api/v9/interactions/" + data.id + "/" + data.token + "/callback",
@@ -63,7 +64,8 @@ var Interaction = /** @class */ (function () {
                     method: "POST",
                     body: JSON.stringify(content),
                     headers: {
-                        'Content-Type': "application/json"
+                        'Content-Type': "application/json",
+                        'Authorization': "Bot " + _this.bot_token
                     }
                 }).then(function (res) { return __awaiter(_this, void 0, void 0, function () {
                     return __generator(this, function (_a) {
@@ -79,7 +81,8 @@ var Interaction = /** @class */ (function () {
                     method: "PATCH",
                     body: JSON.stringify(content),
                     headers: {
-                        'Content-Type': "application/json"
+                        'Content-Type': "application/json",
+                        'Authorization': "Bot " + _this.bot_token
                     }
                 }).then(function (res) { return __awaiter(_this, void 0, void 0, function () {
                     return __generator(this, function (_a) {
@@ -94,7 +97,8 @@ var Interaction = /** @class */ (function () {
                 node_fetch_1["default"](_this.endpoints.FOLLOWUP + '/messages/' + message_id, {
                     method: "DELETE",
                     headers: {
-                        'Content-Type': "application/json"
+                        'Content-Type': "application/json",
+                        'Authorization': "Bot " + _this.bot_token
                     }
                 }).then(function (res) { return __awaiter(_this, void 0, void 0, function () {
                     return __generator(this, function (_a) {
