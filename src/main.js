@@ -110,7 +110,7 @@ var Interaction = /** @class */ (function () {
                         resolve(verifyRes(res, 204));
                         return [2 /*return*/];
                     });
-                }); });
+                }); })["catch"](function () { });
             });
         };
         this.defer = function () {
@@ -167,7 +167,8 @@ var SlashMessageInteraction = /** @class */ (function () {
                 name: data.data.name,
                 guild_id: data.guild_id,
                 channel_id: data.channel_id
-            }
+            },
+            timestamp: Date.now()
         };
     }
     return SlashMessageInteraction;

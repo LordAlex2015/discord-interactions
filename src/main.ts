@@ -119,7 +119,8 @@ class SlashMessageInteraction {
                 name: data.data.name,
                 guild_id: data.guild_id,
                 channel_id: data.channel_id,
-            }
+            },
+            timestamp: Date.now()
         }
     }
 }
