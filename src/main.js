@@ -40,9 +40,8 @@ exports.ButtonType = exports.ApplicationCommandOptionType = exports.SlashInterac
 // @ts-ignore
 var node_fetch_1 = require("node-fetch");
 var SlashInteraction = /** @class */ (function () {
-    function SlashInteraction(data, bot_token, bot_id) {
+    function SlashInteraction(data, bot_id) {
         var _this = this;
-        this.authToken = bot_token;
         this.bot_id = bot_id;
         this.endpoints = {
             CALLBACK: "https://discord.com/api/v9/interactions/" + data.id + "/" + data.token + "/callback",
@@ -57,8 +56,7 @@ var SlashInteraction = /** @class */ (function () {
                     method: "POST",
                     body: JSON.stringify(content),
                     headers: {
-                        'Content-Type': "application/json",
-                        "Authorization": "Bot " + _this.authToken
+                        'Content-Type': "application/json"
                     }
                 }).then(function (res) { return __awaiter(_this, void 0, void 0, function () {
                     return __generator(this, function (_a) {
@@ -74,8 +72,7 @@ var SlashInteraction = /** @class */ (function () {
                     method: "PATCH",
                     body: JSON.stringify(content),
                     headers: {
-                        'Content-Type': "application/json",
-                        "Authorization": "Bot " + _this.authToken
+                        'Content-Type': "application/json"
                     }
                 }).then(function (res) { return __awaiter(_this, void 0, void 0, function () {
                     return __generator(this, function (_a) {
@@ -90,8 +87,7 @@ var SlashInteraction = /** @class */ (function () {
                 node_fetch_1["default"](_this.endpoints.FOLLOWUP + '/messages/' + message_id, {
                     method: "DELETE",
                     headers: {
-                        'Content-Type': "application/json",
-                        "Authorization": "Bot " + _this.authToken
+                        'Content-Type': "application/json"
                     }
                 }).then(function (res) { return __awaiter(_this, void 0, void 0, function () {
                     return __generator(this, function (_a) {
@@ -107,8 +103,7 @@ var SlashInteraction = /** @class */ (function () {
                     method: "POST",
                     body: JSON.stringify(content),
                     headers: {
-                        'Content-Type': "application/json",
-                        "Authorization": "Bot " + _this.authToken
+                        'Content-Type': "application/json"
                     }
                 }).then(function (res) { return __awaiter(_this, void 0, void 0, function () {
                     return __generator(this, function (_a) {

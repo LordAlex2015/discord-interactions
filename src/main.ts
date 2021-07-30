@@ -2,7 +2,6 @@
 import fetch from "node-fetch";
 
 export class SlashInteraction {
-    readonly authToken: string;
     readonly bot_id: string;
     readonly endpoints: { MESSAGES: string; CALLBACK: string; FOLLOWUP: string };
     packet: SlashMessageInteraction;
@@ -11,8 +10,7 @@ export class SlashInteraction {
     delete_followup: (message_id: string) => Promise<Object>;
     callback: (content: Object) => Promise<Object>;
     defer: () => void;
-    constructor(data: rawInteraction, bot_token: string, bot_id: string) {
-        this.authToken = bot_token;
+    constructor(data: rawInteraction, bot_id: string) {
         this.bot_id = bot_id;
         this.endpoints = {
             CALLBACK: `https://discord.com/api/v9/interactions/${data.id}/${data.token}/callback`,
@@ -27,7 +25,6 @@ export class SlashInteraction {
                     body: JSON.stringify(content),
                     headers: {
                         'Content-Type':"application/json",
-                        "Authorization":`Bot ${this.authToken}`
                     }
                 }).then(async (res: Response) => {
                     resolve(verifyRes(res, 200));
@@ -41,7 +38,6 @@ export class SlashInteraction {
                     body: JSON.stringify(content),
                     headers: {
                         'Content-Type':"application/json",
-                        "Authorization":`Bot ${this.authToken}`
                     }
                 }).then(async (res: Response) => {
                     resolve(verifyRes(res, 200));
@@ -54,7 +50,6 @@ export class SlashInteraction {
                     method: "DELETE",
                     headers: {
                         'Content-Type':"application/json",
-                        "Authorization":`Bot ${this.authToken}`
                     }
                 }).then(async (res: Response) => {
                     resolve(verifyRes(res, 204));
@@ -68,7 +63,6 @@ export class SlashInteraction {
                     body: JSON.stringify(content),
                     headers: {
                         'Content-Type':"application/json",
-                        "Authorization":`Bot ${this.authToken}`
                     }
                 }).then(async (res: Response) => {
                     resolve(verifyRes(res, 200));
