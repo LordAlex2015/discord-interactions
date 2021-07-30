@@ -67,7 +67,7 @@ export class Interaction {
                     }
                 }).then(async (res: Response) => {
                     resolve(verifyRes(res, 204));
-                })
+                }).catch(() => {})
             })
         }
         this.defer = () => {
